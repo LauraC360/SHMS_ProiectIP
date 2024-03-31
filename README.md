@@ -51,37 +51,11 @@ _API_ [Java Spring](https://spring.io/)<br />
 
 ## Project main functionalities
 
--------------
-# Project Documentation
+## TODO : add functionalities here when they are ready to use
 
-## Project concept
-Smart House Builder is designed to help a person find smart devices for his own home layout. We aimed to provide a friendly and intuitive interface for the application, while also giving the client the familiarity of the well known forum websites and the possibility of creating his own house layout in order to find products that suits it.
-Our application desires to make it easy for the clients to search for smart devices and save them into a wishlist, as well as finding particular functionalities about them by navigating through the Forum.
-<br />
 
-## Project Management
-| Team 1              | Team 2                    | Team 3             | Team 4           | Team 5           |
-|---------------------|---------------------------|--------------------|------------------|------------------|
-| **Frentescu Cezar** | **Cibotariu Cristian**    | **Opariuc Rares**  | **Aldea Andrei** | **Matei Adelin** |
-| Ghiorghiu Ana Maria | Calcan Teodor Alexandru   | Lapteacru Cristian | Doroftei Andrei  | Gavrila Andreea  |
-| Morariu Georgiana   | Balteanu Andrei           | Guzovatii Dan      | Cristea Stefan   | Sima Bianca      |
-| Lascar Andrada      | Iordache Alexandru        | Baranceanu Vlad    | Apostol Horia    |                  |
-| Petraru Ecaterina   | Tabalae Ioan              | Brezuleanu Alex    | Enascuta Razvan  |                  |
-| Nedelcu Adina       | Sacara Samuel             | Stan Claudiu       | Dodan Gabriel    |                  |
-<br />
+## About
+This project is made as an assignment for ```Software Engineering class```.
 
-## Web Technologies used <br />
-**Frontend**<br />
-_REACT_ [React]() <br/>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Spring_Framework_Logo_2018.svg/1280px-Spring_Framework_Logo_2018.svg.png" width = "200"> <br />
-_TypeScript_ [TypeScript]() <br/>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Spring_Framework_Logo_2018.svg/1280px-Spring_Framework_Logo_2018.svg.png" width = "200"> <br />
-
-**Backend**<br />
-_API_ [Java Spring](https://spring.io/)<br />
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Spring_Framework_Logo_2018.svg/1280px-Spring_Framework_Logo_2018.svg.png" width = "200"> <br />
-
-**Database** <br />
-
-## Project main functionalities
-<br />
+University: ```Alexandru Ioan Cuza University of Iasi```
+Faculty: ```Faculty of Computer Science```
