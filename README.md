@@ -20,6 +20,7 @@ The Smart Household Management System (SHMS) is a comprehensive, cross-platform 
 | Stanciu Sebastian         | Popescu Mara              | Astefanoaie Ioana          |                     |
 
 <br />
+
 **Team 1**:
 Main task : Module 1 - User authentication and management
 
