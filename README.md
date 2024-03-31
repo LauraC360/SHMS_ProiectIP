@@ -1,4 +1,5 @@
-# SHMS_ProiectIP
+# Smart Household Management System (SHMS)
+
 ## 1. Project Description
 
 
