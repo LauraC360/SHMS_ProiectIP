@@ -1,8 +1,7 @@
 # Smart Household Management System (SHMS)
-
-# Project Documentation
-
 <br />
+
+# Project Documentation <br />
 
 ## Project Description
 The Smart Household Management System (SHMS) is a comprehensive, cross-platform web application designed to streamline and enhance the organization and coordination of household activities. It aims to foster a collaborative environment for family members or housemates by providing a shared, real-time platform for managing household tasks, inventories, recipes, meal planning, and shopping lists. SHMS focuses on enhancing communication, efficiency, and convenience within the household, making daily routines smoother and more organized.
