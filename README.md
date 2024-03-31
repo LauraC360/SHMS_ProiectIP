@@ -21,26 +21,26 @@ The Smart Household Management System (SHMS) is a comprehensive, cross-platform 
 
 <br />
 
-**Team 1**:
+**Team 1**: <br />
 Main task : Module 1 - User authentication and management
 
-**Team 2** :
+**Team 2** : <br />
 Main task : Module 4 - Restock automation and shopping optimization
 
-**Team 3** :
+**Team 3** : <br />
 Main task : Module 3 - Recipe management and meal planner
 
-**Team 4**:
+**Team 4**: <br />
 Main task : Module 2 - Shared shopping list and inventory
 
 <br />
 
 ## Web Technologies used <br />
 **Frontend**<br />
-_REACT_ [React]() <br/>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Spring_Framework_Logo_2018.svg/1280px-Spring_Framework_Logo_2018.svg.png" width = "200"> <br />
-_TypeScript_ [TypeScript]() <br/>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Spring_Framework_Logo_2018.svg/1280px-Spring_Framework_Logo_2018.svg.png" width = "200"> <br />
+_REACT_ [React](https://react.dev/) <br/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/React_Logo_SVG.svg/1024px-React_Logo_SVG.svg.png" width = "200"> <br />
+_TypeScript_ [TypeScript](https://www.typescriptlang.org/) <br/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Typescript.svg/1024px-Typescript.svg.png" width = "200"> <br />
 
 **Backend**<br />
 _API_ [Java Spring](https://spring.io/)<br />
