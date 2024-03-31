@@ -55,7 +55,7 @@ TODO : add functionalities here when they are ready to use
 
 
 ## About
-This project is made as an assignment for ```Software Engineering class```.
+This project is made as an assignment for `Software Engineering` class.
 
-University: ```Alexandru Ioan Cuza University of Iasi```
-Faculty: ```Faculty of Computer Science```
+University: `Alexandru Ioan Cuza University of Iasi`<br>
+Faculty: `Faculty of Computer Science`
