@@ -1,7 +1,8 @@
 # Smart Household Management System (SHMS)
 <br />
 
-# Project Documentation <br />
+# Project Documentation
+<br />
 
 ## Project Description
 The Smart Household Management System (SHMS) is a comprehensive, cross-platform web application designed to streamline and enhance the organization and coordination of household activities. It aims to foster a collaborative environment for family members or housemates by providing a shared, real-time platform for managing household tasks, inventories, recipes, meal planning, and shopping lists. SHMS focuses on enhancing communication, efficiency, and convenience within the household, making daily routines smoother and more organized.
@@ -20,25 +21,25 @@ The Smart Household Management System (SHMS) is a comprehensive, cross-platform 
 
 <br />
 
-**Team 1**: <br />
-Main task : Module 1 - User authentication and management
+**Team 1** <br />
+**Main task:** Module 1 - User authentication and management
 
-**Team 2** : <br />
-Main task : Module 4 - Restock automation and shopping optimization
+**Team 2** <br />
+**Main task:** Module 4 - Restock automation and shopping optimization
 
-**Team 3** : <br />
-Main task : Module 3 - Recipe management and meal planner
+**Team 3** <br />
+**Main task:** Module 3 - Recipe management and meal planner
 
-**Team 4**: <br />
-Main task : Module 2 - Shared shopping list and inventory
+**Team 4** <br />
+**Main task:** Module 2 - Shared shopping list and inventory
 
 <br />
 
 ## Web Technologies used <br />
 **Frontend**<br />
-_REACT_ [React](https://react.dev/) <br/>
+_REACT_ [React_official_website](https://react.dev/) <br/>
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/React_Logo_SVG.svg/1024px-React_Logo_SVG.svg.png" width = "200"> <br />
-_TypeScript_ [TypeScript](https://www.typescriptlang.org/) <br/>
+_TypeScript_ [TypeScript_official_website](https://www.typescriptlang.org/) <br/>
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Typescript.svg/1024px-Typescript.svg.png" width = "200"> <br />
 
 **Backend**<br />
