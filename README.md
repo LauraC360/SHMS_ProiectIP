@@ -9,7 +9,7 @@
 ## Project Management
 | Team 1                    | Team 2                    | Team 3                     | Team 4              |
 |---------------------------|---------------------------|----------------------------|---------------------|
-| **Balcan Bruno-Cristian** | **Maximiuc Teodora**      | **Chiriac Laura-Florina**  | **Galbeaza Daniel** |
+| **Balcan Bruno-Cristian** | **Maximiuc Teodora**      | **Chiriac Laura-Florina**  | **Gălbează Daniel** |
 | Cazacu Ion                | Bocanet Raluca-Andreea    | Bindiu Ana-Maria           | Dragos Catalin      |
 | Verestiuc Eduard          | Lacatus Stefania          | Bujenita Lucian            | Cucuteanu Lucian    |
 | Bejan Paul Eusebiu        | Iacobut Delia             | Luca Stefan                | Palici Roberto      |
