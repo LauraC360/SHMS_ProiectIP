@@ -1,9 +1,11 @@
 # Smart Household Management System (SHMS)
+
 # Project Documentation
 
 <br />
 
 ## Project Description
+The Smart Household Management System (SHMS) is a comprehensive, cross-platform web application designed to streamline and enhance the organization and coordination of household activities. It aims to foster a collaborative environment for family members or housemates by providing a shared, real-time platform for managing household tasks, inventories, recipes, meal planning, and shopping lists. SHMS focuses on enhancing communication, efficiency, and convenience within the household, making daily routines smoother and more organized.
 
 <br />
 
@@ -16,16 +18,37 @@
 | Bejan Paul Eusebiu        | Iacobut Delia             | Luca Stefan                | Palici Roberto      |
 | Samson Corina             | Cirjontu Ionela           | Antohi Robert              | Tiganescu Iustin    |
 | Stanciu Sebastian         | Popescu Mara              | Astefanoaie Ioana          |                     |
+
+<br />
+**Team 1**:
+Main task : Module 1 - User authentication and management
+
+**Team 2** :
+Main task : Module 4 - Restock automation and shopping optimization
+
+**Team 3** :
+Main task : Module 3 - Recipe management and meal planner
+
+**Team 4**:
+Main task : Module 2 - Shared shopping list and inventory
+
 <br />
 
-## Web Technologies used <br/>
+## Web Technologies used <br />
+**Frontend**<br />
+_REACT_ [React]() <br/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Spring_Framework_Logo_2018.svg/1280px-Spring_Framework_Logo_2018.svg.png" width = "200"> <br />
+_TypeScript_ [TypeScript]() <br/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Spring_Framework_Logo_2018.svg/1280px-Spring_Framework_Logo_2018.svg.png" width = "200"> <br />
 
-<br/>
+**Backend**<br />
+_API_ [Java Spring](https://spring.io/)<br />
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Spring_Framework_Logo_2018.svg/1280px-Spring_Framework_Logo_2018.svg.png" width = "200"> <br />
+
+**Database** <br />
+
 
 ## Project main functionalities
-<br />
-
-
 
 -------------
 # Project Documentation
@@ -61,22 +84,3 @@ _API_ [Java Spring](https://spring.io/)<br />
 
 ## Project main functionalities
 <br />
-
-**Forum** <br />
-Inspired by Filelist, our application provides a list of posts made by other users. You can like those posts, as well as report them. By your own preferences, you can sort these posts by most recent, popular and commented. Before clicking on a post that catches your attention, you can see the author, the date and the number of likes of comments. Later you can contribute to the forum by sharing your own experience by choosing your topic, writing down your description and category(Hardware, Quest, Review, Setup, Software). Smart House Builder has the feature of sharing via Twitter your own posts.
-
-**Marketplace** <br />
-By clicking on Marketplace, there will be shown a list of products and a set of options next to each product. The main features of Marketplace are to add to wishlist or check the description of our products. These devices are mainly scraped off Amazon and the info regarding these items are the price and an intuitive description of their properties.
-
-**SHB** <br />
-The most important and complex part of this project, Smart House Builder is the feature that the client uses in order to create the layout of his own house. Intuitively, the user can start adding objects from various categories such as devices, walls, windows, etc and describe where he wishes to place them in the desired setup.
-
-**Account management and website information** <br />
-_About us and Contact us_ <br />
-The user can read about Smart House Builder and also they can read the most frequently asked questions. If their question is not answered or they need further help, they can contact us via 'Reach us right away!' form that sends us an email. <br />
-<br />
-_Sign in_  <br />
-Log in interface should appear both when directly accessed (exp. By a button) and when trying to access a protected route (a functionality that requires an account). Our Log in interface contains a form for logging in that is easy to switch to the register interface, error handling for invalid data and option to reset password based on email. Register interface is accessible from the login interface. Once logged in, by clicking your account user icon, you can either Manage your account or logout.  <br />
-<br />
-_Manage Account_ <br />
-This interface contains the settings of your account, thus the option to change your password and to change your email that has error handling for invalid data at each and every text field. <br />
