@@ -51,7 +51,7 @@ _API_ [Java Spring](https://spring.io/)<br />
 
 ## Project main functionalities
 
-## TODO : add functionalities here when they are ready to use
+TODO : add functionalities here when they are ready to use
 
 
 ## About
