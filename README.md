@@ -1,6 +1,5 @@
 # Smart Household Management System (SHMS)
 <br />
-
 # Project Documentation
 
 ## Project Description
