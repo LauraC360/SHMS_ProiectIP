@@ -87,4 +87,4 @@ public class Recipe {
         return totalDuration;
     }
 
-};
+}
