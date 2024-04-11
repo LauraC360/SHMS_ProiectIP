@@ -9,7 +9,7 @@ import java.util.ArrayList;
 @RequestMapping("/recipes")
 public class RecipeController {
 
-    private static final Recipe defaultRecipe = new Recipe(1, "Pasta", "Pasta with tomato sauce", new ArrayList<RecipeStep>(), 4.7f, new File("/img/pasta-with-simple-tomato-sauce.jpeg"));
+    private static final Recipe defaultRecipe = new Recipe(1, "Pasta", "Pasta with tomato sauce", new ArrayList<RecipeStep>(), 4.7f, null);
 
     @GetMapping("/default")
     public Recipe getDefaultRecipe() {
