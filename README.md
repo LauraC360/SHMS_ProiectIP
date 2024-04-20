@@ -46,7 +46,7 @@ _API_ [Java Spring](https://spring.io/)<br />
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Spring_Framework_Logo_2018.svg/1280px-Spring_Framework_Logo_2018.svg.png" width = "200"> <br />
 
 **Database** <br />
-_RelationalDatabase_ [MySQL](https://www.mysql.com/)<br />
+_Relational Database_ [MySQL](https://www.mysql.com/)<br />
 <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/dd/MySQL_logo.svg/1920px-MySQL_logo.svg.png" width = "200"> <br />
 
 
