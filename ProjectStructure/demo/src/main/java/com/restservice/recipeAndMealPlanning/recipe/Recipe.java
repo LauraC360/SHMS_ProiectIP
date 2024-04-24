@@ -1,6 +1,7 @@
 package com.restservice.recipeAndMealPlanning.recipe;
 
 import com.restservice.shoppingListAndInventory.inventory.Ingredient;
+import com.restservice.shoppingListAndInventory.inventory.Quantity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,83 +9,145 @@ import lombok.ToString;
 
 import java.io.File;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
+
+import jakarta.persistence.*;
 
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
+@Entity
+@Table(name = "recipes")
 public class Recipe {
+    @Id
+    @Column(name = "id")
     protected Integer recipeId;
-    protected String recipeTitle;
-    protected List<RecipeStep> recipeStepsList = new ArrayList<>();
-    protected Float rating;
-    protected File recipeImage;
-    protected String recipeDescription;
 
-    public Recipe(Integer recipeId, String recipeTitle, String recipeDescription, List<RecipeStep> recipeStepsList, Float rating, File recipeImage) {
+    @Column(name = "Name")
+    protected String recipeTitle;
+
+    @Column(name = "AuthorId")
+    protected Integer authorId;
+
+    @Column(name = "AuthorName")
+    protected String authorName;
+
+    @Column(name = "CookTime")
+    protected Duration cookTime;
+
+    @Column(name = "PrepTime")
+    protected Duration prepTime;
+
+    @Column(name = "TotalTime")
+    protected Duration totalTime;
+
+    @Column(name = "DatePublished")
+    protected String datePublished;
+
+    @Lob
+    @Column(name = "Description")
+    protected String description;
+
+    @ElementCollection
+    @Column(name = "ImageList")
+    protected List<String> imageList;
+
+    @Column(name = "RecipeCategory")
+    protected String category;
+
+    @ElementCollection
+    @Column(name = "Keywords")
+    protected List<String> keywords;
+
+    @ElementCollection
+    @Column(name = "Ingredients")//this will be the better quantities, brought from another db
+    protected Map<String, Float> ingredientsMap = new HashMap<String, Float>() ;
+
+    @ElementCollection
+    @Column(name = "PrintableIngredients")//text to b printed in the recipe
+    protected List<String> printableIngredients;
+
+    @Column(name = "ReviewCount")
+    protected Float reviewCount;
+
+    @Column(name = "Calories")
+    protected Float calories;
+
+    @Column(name = "FatContent")
+    protected Float fatContent;
+
+    @Column(name = "SaturatedFatContent")
+    protected Float saturatedFatContent;
+
+    @Column(name = "CholesterolContent")
+    protected Float cholesterolContent;
+
+    @Column(name = "SodiumContent")
+    protected Float sodiumContent;
+
+    @Column(name = "CarbohydrateContent")
+    protected Float carbohydrateContent;
+
+    @Column(name = "FiberContent")
+    protected Float fiberContent;
+
+    @Column(name = "SugarContent")
+    protected Float sugarContent;
+
+    @Column(name = "ProteinContent")
+    protected Float proteinContent;
+
+    @Column(name = "Servings")
+    protected Float recipeServings;
+
+    @Column(name = "Yield")
+    protected String recipeYield;
+
+    @ElementCollection
+    @Column(name = "Instructions")
+    protected Map<Integer, String> instructionsList;
+
+    public Recipe() {}
+
+    public Recipe(Integer recipeId, String recipeTitle, Integer authorId, String authorName, Duration cookTime, Duration prepTime, Duration totalTime, String datePublished, String description, String recipeCategory, List<String> keywords, List<Float> recipeIngredientQuantityList, List<String> recipeIngredientPartsList, List<String> printableIngredients, Float reviewCount, Float calories, Float fatContent, Float saturatedFatContent, Float cholesterolContent, Float sodiumContent, Float carbohydrateContent, Float fiberContent, Float sugarContent, Float proteinContent, Float recipeServings, String recipeYield, Map<Integer, String> instructionsList){
+        if(recipeIngredientQuantityList.size() != recipeIngredientPartsList.size())
+        {recipeId = -1; return;}
+
         this.recipeId = recipeId;
         this.recipeTitle = recipeTitle;
-        this.recipeDescription = recipeDescription;
-        this.recipeStepsList = recipeStepsList;
-        this.rating = rating;
-        this.recipeImage = recipeImage;
-    }
+        this.authorId = authorId;
+        this.authorName = authorName;
+        this.cookTime = cookTime;
+        this.prepTime = prepTime;
+        this.totalTime = totalTime;
+        this.datePublished = datePublished;
+        this.description = description;
+        this.category = recipeCategory;
+        this.keywords = keywords;
 
 
-    public void addRecipeStep(RecipeStep recipeStep) {
-        this.recipeStepsList.add(recipeStep);
-    }
 
-    public void addRecipeSteps(List<RecipeStep> recipeSteps) {
-        this.recipeStepsList.addAll(recipeSteps);
-    }
-
-    public void addRecipeSteps(RecipeStep... recipeSteps) {
-        for (RecipeStep recipeStep : recipeSteps) {
-            this.recipeStepsList.add(recipeStep);
+        for(int i = 0; i < recipeIngredientQuantityList.size(); i++){
+            if(recipeIngredientQuantityList.get(i) == -1.0f)
+                continue;
+            ingredientsMap.put(recipeIngredientPartsList.get(i), recipeIngredientQuantityList.get(i));
         }
+
+        this.printableIngredients = printableIngredients;
+        this.reviewCount = reviewCount;
+        this.calories = calories;
+        this.fatContent = fatContent;
+        this.saturatedFatContent = saturatedFatContent;
+        this.cholesterolContent = cholesterolContent;
+        this.sodiumContent = sodiumContent;
+        this.carbohydrateContent = carbohydrateContent;
+        this.fiberContent = fiberContent;
+        this.sugarContent = sugarContent;
+        this.proteinContent = proteinContent;
+        this.recipeServings = recipeServings;
+        this.recipeYield = recipeYield;
+        this.instructionsList = instructionsList;
     }
-
-    public void removeRecipeStep(RecipeStep recipeStep) {
-        this.recipeStepsList.remove(recipeStep);
-    }
-
-    public void removeRecipeStep(Integer index) {
-        this.recipeStepsList.remove(index);
-    }
-
-    public void changeOrderOfRecipeStep(Integer index, Integer newIndex) {
-        RecipeStep recipeStep = this.recipeStepsList.get(index);
-        this.recipeStepsList.remove(index);
-        this.recipeStepsList.add(newIndex, recipeStep);
-    }
-
-    public void clearRecipeSteps() {
-        this.recipeStepsList.clear();
-    }
-
-    public List<Ingredient> getAllNecesaryIngredients() {
-        List<Ingredient> allNecessaryIngredients = new ArrayList<>();
-        recipeStepsList.forEach(recipeStep ->
-                allNecessaryIngredients.forEach( ingredient -> {
-                    if(!allNecessaryIngredients.contains(ingredient))
-                        allNecessaryIngredients.add(ingredient);
-
-                    else allNecessaryIngredients.stream().filter(ingredient1 -> ingredient1.equals(ingredient)).forEach(ingredient1 -> ingredient1.getProduct().addQuantity(ingredient.getProduct().getQuantity().getValue()));
-                })
-        );
-        return allNecessaryIngredients;
-    }
-
-    public Duration getTotalDuration() {
-        Duration totalDuration = Duration.ZERO;
-        for (RecipeStep recipeStep : recipeStepsList) {
-            totalDuration = totalDuration.plus(recipeStep.getStepDuration());
-        }
-        return totalDuration;
-    }
-
 }
