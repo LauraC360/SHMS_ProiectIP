@@ -21,8 +21,8 @@ public class InventoryList {
     public void addItem(InventoryItem item){
         itemList.add(item);
     }
-    public void addItem(String name, Quantity quantity){
-        itemList.add(new InventoryItem(name,quantity));
+    public void addItem(String name, Quantity quantity, boolean isEatable){
+        itemList.add(new InventoryItem(name,quantity,isEatable));
     }
     public void removeItem(int index){
         itemList.remove(index);

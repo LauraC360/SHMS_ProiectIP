@@ -13,8 +13,8 @@ import java.time.LocalDate;
 public class InventoryItem {
     Product item;
     LocalDate dateOfBuying;
-    public InventoryItem(String name, Quantity quantity){
-        item=new Product(name, quantity);
+    public InventoryItem(String name, Quantity quantity, boolean isEatable){
+        item=new Product(name, quantity, isEatable);
         this.dateOfBuying=LocalDate.now();
     }
 }
