@@ -60,4 +60,8 @@ public class RecipeStep {
         this.ingredientsNecessaryList.set(index, ingredient);
     }
 
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes

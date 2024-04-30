@@ -21,4 +21,6 @@ public class Product {
     }
     public void computeAverageConsumption(){
     }
+
+
 }
