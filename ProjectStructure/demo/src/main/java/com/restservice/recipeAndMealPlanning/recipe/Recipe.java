@@ -109,9 +109,12 @@ public class Recipe {
     @Column(name = "Instructions")
     protected Map<Integer, String> instructionsList;
 
+    @Transient
+    protected List<Ingredient> ingredients = new ArrayList<>();
+
     public Recipe() {}
 
-    public Recipe(Integer recipeId, String recipeTitle, Integer authorId, String authorName, Duration cookTime, Duration prepTime, Duration totalTime, String datePublished, String description, String recipeCategory, List<String> keywords, List<Float> recipeIngredientQuantityList, List<String> recipeIngredientPartsList, List<String> printableIngredients, Float reviewCount, Float calories, Float fatContent, Float saturatedFatContent, Float cholesterolContent, Float sodiumContent, Float carbohydrateContent, Float fiberContent, Float sugarContent, Float proteinContent, Float recipeServings, String recipeYield, Map<Integer, String> instructionsList){
+    public Recipe(Integer recipeId, String recipeTitle, Integer authorId, String authorName, Duration cookTime, Duration prepTime, Duration totalTime, String datePublished, String description, List<String> imageList,String recipeCategory, List<String> keywords, List<Float> recipeIngredientQuantityList, List<String> recipeIngredientPartsList, List<String> printableIngredients, Float reviewCount, Float calories, Float fatContent, Float saturatedFatContent, Float cholesterolContent, Float sodiumContent, Float carbohydrateContent, Float fiberContent, Float sugarContent, Float proteinContent, Float recipeServings, String recipeYield, Map<Integer, String> instructionsList){
         if(recipeIngredientQuantityList.size() != recipeIngredientPartsList.size())
         {recipeId = -1; return;}
 
@@ -123,6 +126,7 @@ public class Recipe {
         this.prepTime = prepTime;
         this.totalTime = totalTime;
         this.datePublished = datePublished;
+        this.imageList = imageList;
         this.description = description;
         this.category = recipeCategory;
         this.keywords = keywords;
