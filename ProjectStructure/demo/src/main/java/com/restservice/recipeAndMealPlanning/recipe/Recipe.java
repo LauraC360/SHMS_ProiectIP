@@ -2,6 +2,7 @@ package com.restservice.recipeAndMealPlanning.recipe;
 
 import com.restservice.shoppingListAndInventory.inventory.Ingredient;
 import com.restservice.shoppingListAndInventory.inventory.Quantity;
+import com.restservice.shoppingListAndInventory.inventory.QuantityType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -61,8 +62,9 @@ public class Recipe {
     @Column(name = "Keywords")
     protected List<String> keywords;
 
-    @ElementCollection
-    @Column(name = "Ingredients")//this will be the better quantities, brought from another db
+
+    //this will be the better quantities, brought from another db
+    @Transient
     protected Map<String, Float> ingredientsMap = new HashMap<String, Float>() ;
 
     @ElementCollection
@@ -109,9 +111,8 @@ public class Recipe {
     @Column(name = "Instructions")
     protected Map<Integer, String> instructionsList;
 
-    @Transient
-    protected List<Ingredient> ingredients = new ArrayList<>();
-
+    @ElementCollection
+    List<Ingredient> ingredients = new ArrayList<>();
     public Recipe() {}
 
     public Recipe(Integer recipeId, String recipeTitle, Integer authorId, String authorName, Duration cookTime, Duration prepTime, Duration totalTime, String datePublished, String description, List<String> imageList,String recipeCategory, List<String> keywords, List<Float> recipeIngredientQuantityList, List<String> recipeIngredientPartsList, List<String> printableIngredients, Float reviewCount, Float calories, Float fatContent, Float saturatedFatContent, Float cholesterolContent, Float sodiumContent, Float carbohydrateContent, Float fiberContent, Float sugarContent, Float proteinContent, Float recipeServings, String recipeYield, Map<Integer, String> instructionsList){
@@ -130,7 +131,6 @@ public class Recipe {
         this.description = description;
         this.category = recipeCategory;
         this.keywords = keywords;
-
 
 
         for(int i = 0; i < recipeIngredientQuantityList.size(); i++){
@@ -153,5 +153,18 @@ public class Recipe {
         this.recipeServings = recipeServings;
         this.recipeYield = recipeYield;
         this.instructionsList = instructionsList;
+
+
+
+        //Iterator<Map.Entry<String, Float>> it = ingredientsMap.entrySet().iterator();
+        for(int i = 0; i < recipeIngredientQuantityList.size(); i++){
+            //Map.Entry<String, Float> entry = it.next();
+            ingredients.add(new Ingredient(
+                    recipeIngredientPartsList.get(i),
+                    new Quantity(recipeIngredientQuantityList.get(i),
+                            QuantityType.fromPhrase(
+                                    printableIngredients.get(i)
+                            ))));
+        }
     }
 }

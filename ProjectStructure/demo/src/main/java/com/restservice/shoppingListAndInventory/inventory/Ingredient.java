@@ -1,7 +1,8 @@
 package com.restservice.shoppingListAndInventory.inventory;
 
 
-import jakarta.persistence.Entity;
+import com.restservice.recipeAndMealPlanning.recipe.Recipe;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,11 +12,19 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode(callSuper = false)
+@Embeddable
+public class Ingredient implements Eatable{// we  might remove eatable
 
-public class Ingredient extends Product implements Eatable{
+    String name;
+    @Embedded
+    Quantity quantity;
+
+    public Ingredient(){
+    }
 
     public Ingredient(String name, Quantity quantity){
-        super(name,quantity);
+        this.name=name;
+        this.quantity=quantity;
     }
 
 }

@@ -1,4 +1,6 @@
 package com.restservice.shoppingListAndInventory.inventory;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
@@ -9,13 +11,13 @@ import java.time.LocalDate;
 @Setter
 @ToString
 @EqualsAndHashCode
-
 public class Product {
-
-    private Long id;
-
+    /*
+    @Id*/
+    Long id;
     String name;
     LocalDate expiryDate;
+
     Quantity quantity;
     int averageConsumption;
 
@@ -26,7 +28,10 @@ public class Product {
     }
 
     public Product() {
-
+        id = -1L;
+        name = "";
+        quantity = new Quantity();
+        averageConsumption = 0;
     }
 
     public void addQuantity(float quantity){

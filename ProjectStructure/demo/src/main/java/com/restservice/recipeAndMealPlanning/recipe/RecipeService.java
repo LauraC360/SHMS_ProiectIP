@@ -28,7 +28,7 @@ public class RecipeService {
     private RecipeRepository recipeRepository;
 
     protected void importDB() throws Exception{
-        Reader in = new FileReader("recipesLaura.csv");
+        Reader in = new FileReader("recipes.csv");
         String[] headers = {"RecipeId", "Name", "AuthorId", "AuthorName", "CookTime", "PrepTime", "TotalTime", "DatePublished", "Description", "ImageList", "RecipeCategory", "Keywords", "RecipeIngredientQuantity", "RecipeIngredientParts", "AggregatedRating", "ReviewCount", "Calories", "FatContent", "SaturatedFatContent", "CholesterolContent", "SodiumContent", "CarbohydrateContent", "FiberContent", "SugarContent", "ProteinContent", "RecipeServings", "RecipeYield", "RecipeInstructions"};
         Reader inIngredients = new FileReader("recipes_ingredients.csv");
         String[] headersIngredients = {"id", "ingredients_raw"};
@@ -40,28 +40,30 @@ public class RecipeService {
         Integer success = 0;
 
 
-        sortCsvEntries();
+        //sortCsvEntries();
         CSVFormat formatIngredients = CSVFormat.DEFAULT.builder().setHeader(headersIngredients).setSkipHeaderRecord(true).build();
         Iterator<CSVRecord>  printableIngredientsIter = (formatIngredients.parse(inIngredients)).iterator();
         for(CSVRecord record : records){
             count++;
+            //if(count >= 2) break;
             //if(success >= 100) break;
 
             try {
 
-                ArrayList<String> keywordsList = new ArrayList<>(Arrays.asList(record.get("Keywords").trim().replace("[", "").replace("]", "").split(",")));
-                ArrayList<String> temp = new ArrayList<>(Arrays.stream(record.get("RecipeIngredientQuantity").trim().replace("[", "").replace("]", "").split(",")).toList());
+                ArrayList<String> keywordsList = new ArrayList<>(parseStringList(record.get("Keywords")));
+                ArrayList<String> temp = new ArrayList<>(parseStringList(record.get("RecipeIngredientQuantity")));
                 ArrayList<Float> recipeIngredientQuantityList = new ArrayList<>();
                 for (String s : temp) {
                     recipeIngredientQuantityList.add(parseFraction(s));
                 }
 
-                ArrayList<String> recipeIngredientPartsList = new ArrayList<>(Arrays.asList(record.get("RecipeIngredientParts").trim().replace("[", "").replace("]", "").split(",")));
-                System.out.println("RecipeId: " + record.get("RecipeId"));
+                //fix paarsing below
+                ArrayList<String> recipeIngredientPartsList = new ArrayList<>(parseStringList(record.get("RecipeIngredientParts")));
+                //System.out.println("RecipeId: " + record.get("RecipeId"));
                 //System.out.println("Ingredients: " + recipeIngredientPartsList);
                 //System.out.println("Quantities: " + recipeIngredientQuantityList);
 
-                ArrayList<String> recipeInstructions = new ArrayList<>(Arrays.asList(record.get("RecipeInstructions").trim().replace("[", "").replace("]", "").split("\\.")));
+                ArrayList<String> recipeInstructions = new ArrayList<>(parseStringList(record.get("RecipeInstructions")));
                 HashMap<Integer, String> recipeInstructionsMap = new HashMap<>();
                 for (int i = 0; i < recipeInstructions.size(); i++) {
                     String instruction = recipeInstructions.get(i).trim();
@@ -77,22 +79,26 @@ public class RecipeService {
 
 
                 List<String> printableIngredients = null;
+                boolean toSkip = false;
                 try {
                     printableIngredients = getPrintableIngredients(Integer.parseInt(record.get("RecipeId")), printableIngredientsIter);
                 } catch (Exception e) {
                     System.out.println("Error getting printable ingredients for recipe: " + record.get("RecipeId"));
                     //e.printStackTrace();
-                    continue; // Skip to the next iteration if ingredients are missing
+                    toSkip = true;
                 }
+                if(toSkip) continue;
 
                 List<String> imageLinks = null;
+                toSkip = false;
                 try{
                     imageLinks = getImageLinks(record.get("ImageList"));
                 } catch (Exception e) {
                     System.out.println("Error getting image list for recipe: " + record.get("RecipeId"));
                     //e.printStackTrace();
-                    continue;
+                    toSkip = true;
                 }
+                if(toSkip) continue;
 
 
 
@@ -101,9 +107,9 @@ public class RecipeService {
                         record.get("Name"),
                         Integer.parseInt(record.get("AuthorId")),
                         record.get("AuthorName"),
-                        (Objects.equals(record.get("CookTime"), "") ? Duration.ofMinutes(-1) : Duration.parse(record.get("CookTime"))),
-                        (Objects.equals(record.get("PrepTime"), "") ? Duration.ofMinutes(-1) : Duration.parse(record.get("PrepTime"))),
-                        (Objects.equals(record.get("TotalTime"), "") ? Duration.ofMinutes(-1) : Duration.parse(record.get("TotalTime"))),
+                        (Objects.equals(record.get("CookTime"), "NA") || Objects.equals(record.get("CookTime"), "") ? Duration.ofMinutes(-1) : Duration.parse(record.get("CookTime"))),
+                        (Objects.equals(record.get("PrepTime"), "") || Objects.equals(record.get("PrepTime"), "") ? Duration.ofMinutes(-1) : Duration.parse(record.get("PrepTime"))),
+                        (Objects.equals(record.get("TotalTime"), "") || Objects.equals(record.get("TotalTime"), "") ? Duration.ofMinutes(-1) : Duration.parse(record.get("TotalTime"))),
                         record.get("DatePublished"),
                         record.get("Description"),
                         imageLinks == null ? new ArrayList<>() : new ArrayList<>(imageLinks),
@@ -112,17 +118,25 @@ public class RecipeService {
                         new ArrayList<>(recipeIngredientQuantityList),
                         new ArrayList<>(recipeIngredientPartsList),
                         new ArrayList<>(printableIngredients),
-                        (Objects.equals(record.get("ReviewCount"), "") ? -1.0f : Float.parseFloat(record.get("ReviewCount"))),
-                        (Objects.equals(record.get("Calories"), "") ? -1.0f : Float.parseFloat(record.get("Calories"))),
-                        (Objects.equals(record.get("FatContent"), "") ? -1.0f : Float.parseFloat(record.get("FatContent"))),
-                        (Objects.equals(record.get("SaturatedFatContent"), "") ? -1.0f : Float.parseFloat(record.get("SaturatedFatContent"))),
-                        (Objects.equals(record.get("CholesterolContent"), "") ? -1.0f : Float.parseFloat(record.get("CholesterolContent"))),
-                        (Objects.equals(record.get("SodiumContent"), "") ? -1.0f : Float.parseFloat(record.get("SodiumContent"))),
-                        (Objects.equals(record.get("CarbohydrateContent"), "") ? -1.0f : Float.parseFloat(record.get("CarbohydrateContent"))),
-                        (Objects.equals(record.get("FiberContent"), "") ? -1.0f : Float.parseFloat(record.get("FiberContent"))),
-                        (Objects.equals(record.get("SugarContent"), "") ? -1.0f : Float.parseFloat(record.get("SugarContent"))),
-                        (Objects.equals(record.get("ProteinContent"), "") ? -1.0f : Float.parseFloat(record.get("ProteinContent"))),
-                        (Objects.equals(record.get("RecipeServings"), "") ? -1.0f : Float.parseFloat(record.get("RecipeServings"))),
+                        (Objects.equals(record.get("ReviewCount"), "") || Objects.equals(record.get("ReviewCount"), "NA")
+                                ? -1.0f : Float.parseFloat(record.get("ReviewCount"))),
+                        (Objects.equals(record.get("Calories"), "") || Objects.equals(record.get("Calories"), "NA")
+                                ? -1.0f : Float.parseFloat(record.get("Calories"))),
+                        (Objects.equals(record.get("FatContent"), "") || Objects.equals(record.get("FatContent"), "NA")
+                                ? -1.0f : Float.parseFloat(record.get("FatContent"))),
+                        (Objects.equals(record.get("SaturatedFatContent"), "") || Objects.equals(record.get("SaturatedFatContent"), "NA")
+                                ? -1.0f : Float.parseFloat(record.get("SaturatedFatContent"))),
+                        (Objects.equals(record.get("CholesterolContent"), "") || Objects.equals(record.get("CholesterolContent"), "NA")
+                                ? -1.0f : Float.parseFloat(record.get("CholesterolContent"))),
+                        (Objects.equals(record.get("SodiumContent"), "") || Objects.equals(record.get("SodiumContent"), "NA")
+                                ? -1.0f : Float.parseFloat(record.get("SodiumContent"))),
+                        (Objects.equals(record.get("CarbohydrateContent"), "")  || Objects.equals(record.get("CarbohydrateContent"), "NA")
+                                ? -1.0f : Float.parseFloat(record.get("CarbohydrateContent"))),
+                        (Objects.equals(record.get("FiberContent"), "")  || Objects.equals(record.get("FiberContent"), "NA")
+                                ? -1.0f : Float.parseFloat(record.get("FiberContent"))),
+                        (Objects.equals(record.get("SugarContent"), "") || Objects.equals(record.get("SugarContent"), "NA")  ? -1.0f : Float.parseFloat(record.get("SugarContent"))),
+                        (Objects.equals(record.get("ProteinContent"), "") || Objects.equals(record.get("ProteinContent"), "NA")  ? -1.0f : Float.parseFloat(record.get("ProteinContent"))),
+                        (Objects.equals(record.get("RecipeServings"), "NA") || Objects.equals(record.get("RecipeServings"), "")  ? -1.0f : Float.parseFloat(record.get("RecipeServings"))),
                         record.get("RecipeYield"),
                         new HashMap<Integer, String>(recipeInstructionsMap)
                 );
@@ -148,7 +162,7 @@ public class RecipeService {
 
 
     private static float parseFraction(String fraction) throws Exception {
-        if(fraction == null || fraction.contains("NULL") || fraction.isBlank() ) return -1.0f;
+        if(fraction == null || fraction.contains("NULL") || fraction.isBlank() || fraction.contains("NA")) return -1.0f;
 
         String[] parts = fraction.split(" ");
         Float sum = 0.0f;
@@ -298,7 +312,11 @@ public class RecipeService {
     }
 
     private List<String> getImageLinks(String imageList) throws Exception{
-        imageList = imageList.replaceAll("\\s*\\[\\s*", "").replaceAll("\\s*]\\s*", "");
+        if(imageList == null || imageList.isBlank() || imageList.contains("NA") || imageList.contains("NULL") || imageList.contains("character(0)"))
+            throw new Exception("No image links found for recipe");
+
+        //c("https://img.sndimg.com/food/image/upload/w_555,h_416,c_fit,fl_progressive,q_95/v1/img/recipes/54/picQ2X4D8.jpg", "https://img.sndimg.com/food/image/upload/w_555,h_416,c_fit,fl_progressive,q_95/v1/img/recipes/54/pic3oloIV.jpg", "https://img.sndimg.com/food/image/upload/w_555,h_416,c_fit,fl_progressive,q_95/v1/img/recipes/54/picf0dw0o.jpg")
+        imageList = imageList.replace("c(", "").replace(")", "").replace("\"", "");
         List<String> imageLinks = new ArrayList<>();
 
         while(imageList.contains("http")){
@@ -325,5 +343,17 @@ public class RecipeService {
             }
         }
     }*/
+
+    private List<String> parseStringList(String stringList) {
+        // Remove unwanted characters
+        stringList = stringList.replace("c(", "").replace(")", "").replace("\"", "");
+
+        // Split by comma and trim each quantity
+
+        return Arrays.stream(stringList.split(","))
+                .map(String::trim)
+                .collect(Collectors.toList());
+    }
+
 }
 

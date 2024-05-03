@@ -62,7 +62,7 @@ public class RecipeController {
     }
 
     //so i dont accidentally set up again; will b uncommented when ill b working with db population again
-    /*@GetMapping("/setupDB")
+    @GetMapping("/setupDB")
     public String setupDB() {
         try {
             recipeService.importDB();
@@ -72,7 +72,7 @@ public class RecipeController {
         }
 
         return "DB setup done!";
-    }*/
+    }
 
 
     @GetMapping("/getRecipe/{id}")
