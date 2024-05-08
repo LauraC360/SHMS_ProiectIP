@@ -1,28 +1,32 @@
-package com.restservice.restockAndShoppingOptimization;
-
-import com.restservice.shoppingListAndInventory.inventory.Product;
+package org.example;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.List;
-import java.util.Map;
-import lombok.*;
+
 
 @Getter
 @Setter
+@NoArgsConstructor
 @ToString
 @EqualsAndHashCode
+
+@Entity
+@Table(name = "Stores", schema = "sql11703727")
 public class Store {
-    private Location location;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_store")
+    private Integer id_store;
+
+    @Column(name = "name")
     private String name;
-    private Map<Product, Double> priceProduct;
-    public Store(Location location, String name, Map<Product, Double> products) {
-        this.location = location;
-        this.name = name;
-        this.priceProduct = products;
+
+    public Integer getId() {
+        return id_store;
     }
-    public double getPrice(Product product) {
-        return priceProduct.get(product);
-    }
-    public Location getLocation() {
-        return location;
+
+    public String getName() {
+        return name;
     }
 }
