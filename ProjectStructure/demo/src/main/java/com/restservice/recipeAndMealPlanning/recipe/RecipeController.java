@@ -61,7 +61,20 @@ public class RecipeController {
         return defaultRecipe;
     }
 
+
+    @GetMapping("/getRecipe/{id}")
+    public Recipe getRecipe(@PathVariable int id) {
+        return recipeRepository.findById(id).orElse(null);
+    }
+
+
+    @GetMapping("/getRecipeRecommendation/{title}")
+    public Recipe getRecipeRecommendation(@PathVariable String title) {
+        return recipeService.getRecipeRecommendation(title);
+    }
+
     //so i dont accidentally set up again; will b uncommented when ill b working with db population again
+    /*
     @GetMapping("/setupDB")
     public String setupDB() {
         try {
@@ -72,15 +85,12 @@ public class RecipeController {
         }
 
         return "DB setup done!";
-    }
+    }*/
 
 
-    @GetMapping("/getRecipe/{id}")
-    public Recipe getRecipe(@PathVariable int id) {
-        return recipeRepository.findById(id).orElse(null);
-    }
 
 
+    //this is not needed anymore if the setpDB is done with the last version, keeping it just in case
     /*@GetMapping("/removeBadRecipes")
     public String removeBadRecipes() {
         try {
@@ -94,6 +104,7 @@ public class RecipeController {
     }*/
 
 
+    //forgot what this is for:'3
     /*@GetMapping("/removeColumns")
     public String removeColumns() {
         try {

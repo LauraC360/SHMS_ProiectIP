@@ -1,5 +1,6 @@
 package com.restservice.recipeAndMealPlanning.recipe;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
@@ -334,6 +335,7 @@ public class RecipeService {
         return imageLinks;
     }
 
+    //DEPRECATED; keeping just in case
     //DO NOT RUN YET! todo add missing images
     /*protected void removeBadRecipes() throws Exception {
         List<Recipe> recipes = recipeRepository.findAll();
@@ -353,6 +355,51 @@ public class RecipeService {
         return Arrays.stream(stringList.split(","))
                 .map(String::trim)
                 .collect(Collectors.toList());
+    }
+
+
+    public Recipe getRecipeRecommendation(String title) {
+        if (title == null || title.isBlank()) return null;
+        if (!title.contains("recipe")) title = title + " recipe";
+
+        StringBuilder fullOutput = null;
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("python", "src/main/java/com/restservice/recipeAndMealPlanning/recipe/recipe_ai_recommendation.py", title);
+            processBuilder.redirectErrorStream(true);
+
+            Process process = processBuilder.start();
+            Scanner scanner = new Scanner(process.getInputStream());
+
+            fullOutput = new StringBuilder();
+            while (scanner.hasNextLine()) {
+                fullOutput.append(scanner.nextLine());
+            }
+
+
+
+            int exitCode = process.waitFor();
+            if(exitCode != 0) throw new Exception();
+
+            return parseJsonToRecipe(fullOutput.toString());
+        } catch (Exception e) {
+            System.out.println("Error getting ai recommendation with args: " + title);
+            System.out.println("Python output:" + (fullOutput == null ? "null" : fullOutput.toString()));
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    private Recipe parseJsonToRecipe(String jsonString) throws Exception{
+        ObjectMapper objectMapper = new ObjectMapper();
+        Recipe recipe = null;
+        try {
+            recipe = objectMapper.readValue(jsonString, Recipe.class);
+        } catch (Exception e) {
+            System.out.println("Error parsing JSON to Recipe object while getting ai recommendation.");
+            throw e;
+        }
+        return recipe;
     }
 
 }
