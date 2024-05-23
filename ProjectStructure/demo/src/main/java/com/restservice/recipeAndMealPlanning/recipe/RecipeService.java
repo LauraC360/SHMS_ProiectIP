@@ -358,7 +358,7 @@ public class RecipeService {
     }
 
 
-    public Recipe getRecipeRecommendation(String title) {
+    public Recipe getAIRecipeRecommendation(String title) {
         if (title == null || title.isBlank()) return null;
         if (!title.contains("recipe")) title = title + " recipe";
 

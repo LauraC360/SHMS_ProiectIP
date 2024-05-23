@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public enum QuantityType {
     Kilograms, Grams, Pieces, Liters, Milliliters, Cups, Tablespoons, Teaspoons, Pinch, Dash, Gallons, Ounces, Pounds,
-    Pints, Lbs, Cloves, Slices, Leaves, Amount;
+    Pints, Lbs, Cloves, Slices, Leaves, Amount, ToTaste;
 
     public static QuantityType fromString(String text) {
         for (QuantityType b : QuantityType.values()) {

@@ -4,6 +4,8 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
@@ -15,7 +17,7 @@ import java.util.*;
 import org.apache.commons.lang3.StringUtils;
 
 @RestController
-@RequestMapping("/recipes")
+@RequestMapping("/api/v1/recipes/")
 public class RecipeController {
 
     private static final Recipe defaultRecipe = new Recipe(
@@ -68,12 +70,25 @@ public class RecipeController {
     }
 
 
-    @GetMapping("/getRecipeRecommendation/{title}")
+    @GetMapping("/getAIRecipeRecommendation/{title}")
     public Recipe getRecipeRecommendation(@PathVariable String title) {
-        return recipeService.getRecipeRecommendation(title);
+        return recipeService.getAIRecipeRecommendation(title);
     }
 
-    //so i dont accidentally set up again; will b uncommented when ill b working with db population again
+    /**
+     *
+     * @param pageDTO : Integer pageNo, Integer pageSize, Sort.Direction sortDirection {Sort.Direction.ASC, Sort.Direction.DESC}, String sortByColumn <nameOfRecipePropriety>
+     *                defaults: pageNo = 0, pageSize = 10, sortDirection = Sort.Direction.ASC, sortByColumn = "recipeId"
+     *                if you only give some of the parameters, the rest will be set to the default values! <3
+     * @return Page<Recipe>
+     */
+    @GetMapping("/recipePage")
+    public Page<Recipe> getRecipePage(@RequestBody PageDTO pageDTO) {
+        Pageable page = pageDTO.getPageable(pageDTO);
+        return recipeRepository.findAll(page);
+    }
+
+    //so i don't accidentally set up again; will b uncommented when ill b working with db population again
     /*
     @GetMapping("/setupDB")
     public String setupDB() {
@@ -89,33 +104,6 @@ public class RecipeController {
 
 
 
-
-    //this is not needed anymore if the setpDB is done with the last version, keeping it just in case
-    /*@GetMapping("/removeBadRecipes")
-    public String removeBadRecipes() {
-        try {
-            recipeService.removeBadRecipes();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Bad recipes removed failed!";
-        }
-
-        return "Bad recipes removed done!";
-    }*/
-
-
-    //forgot what this is for:'3
-    /*@GetMapping("/removeColumns")
-    public String removeColumns() {
-        try {
-            recipeService.deleteUnwantedColumns();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Columns removed failed!";
-        }
-
-        return "Columns removed done!";
-    }*/
 
 
 
