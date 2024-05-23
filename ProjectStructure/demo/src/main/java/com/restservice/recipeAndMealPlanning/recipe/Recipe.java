@@ -167,4 +167,13 @@ public class Recipe {
                             ))));
         }
     }
+
+    protected static boolean isValidFieldName(String fieldName){
+        try{
+            Recipe.class.getDeclaredField(fieldName);
+            return true;
+        } catch (NoSuchFieldException e) {
+            return false;
+        }
+    }
 }

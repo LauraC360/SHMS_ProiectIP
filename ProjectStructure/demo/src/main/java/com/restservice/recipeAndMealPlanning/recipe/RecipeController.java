@@ -77,9 +77,11 @@ public class RecipeController {
 
     /**
      *
-     * @param pageDTO : Integer pageNo, Integer pageSize, Sort.Direction sortDirection {Sort.Direction.ASC, Sort.Direction.DESC}, String sortByColumn <nameOfRecipePropriety>
-     *                defaults: pageNo = 0, pageSize = 10, sortDirection = Sort.Direction.ASC, sortByColumn = "recipeId"
+     *                @front-team, I can set them to the default ones in case of wrong values, let me know if that helps u more; please read below!
+     * @param pageDTO : Integer pageNo, Integer pageSize, Sort.Direction sortDirection {Sort.Direction.ASC, Sort.Direction.DESC}, String sortByField <nameOfRecipePropriety>
+     *                defaults: pageNo = 0, pageSize = 10, sortDirection = Sort.Direction.ASC, sortByField = "recipeId"
      *                if you only give some of the parameters, the rest will be set to the default values! <3
+     *                if you give invalid values for Sort.Direction or sortByField, it'll crash(for sortByField, you should get error code 500) 
      * @return Page<Recipe>
      */
     @GetMapping("/recipePage")
