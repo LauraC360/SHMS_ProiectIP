@@ -57,20 +57,20 @@ public class RecipeController {
     @Autowired
     private RecipeService recipeService;
 
-    @GetMapping("/default")
+    @GetMapping("/defaultRecipe")
     public Recipe getDefaultRecipe() {
         recipeRepository.save(defaultRecipe);//saving in the db test! works!
         return defaultRecipe;
     }
 
 
-    @GetMapping("/getRecipe/{id}")
+    @GetMapping("/recipe/{id}")
     public Recipe getRecipe(@PathVariable int id) {
         return recipeRepository.findById(id).orElse(null);
     }
 
 
-    @GetMapping("/getAIRecipeRecommendation/{title}")
+    @GetMapping("/AIRecipeRecommendation/{title}")
     public Recipe getRecipeRecommendation(@PathVariable String title) {
         return recipeService.getAIRecipeRecommendation(title);
     }
@@ -81,7 +81,7 @@ public class RecipeController {
      * @param pageDTO : Integer pageNo, Integer pageSize, Sort.Direction sortDirection {Sort.Direction.ASC, Sort.Direction.DESC}, String sortByField <nameOfRecipePropriety>
      *                defaults: pageNo = 0, pageSize = 10, sortDirection = Sort.Direction.ASC, sortByField = "recipeId"
      *                if you only give some of the parameters, the rest will be set to the default values! <3
-     *                if you give invalid values for Sort.Direction or sortByField, it'll crash(for sortByField, you should get error code 500) 
+     *                if you give invalid values for Sort.Direction or sortByField, it'll crash(for sortByField, you should get error code 500)
      * @return Page<Recipe>
      */
     @GetMapping("/recipePage")
