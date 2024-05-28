@@ -70,6 +70,7 @@ public class RecipeController {
     }
 
 
+
     @GetMapping("/AIRecipeRecommendation/{title}")
     public Recipe getRecipeRecommendation(@PathVariable String title) {
         return recipeService.getAIRecipeRecommendation(title);
@@ -88,6 +89,22 @@ public class RecipeController {
     public Page<Recipe> getRecipePage(@RequestBody PageDTO pageDTO) {
         Pageable page = pageDTO.getPageable(pageDTO);
         return recipeRepository.findAll(page);
+    }
+
+
+    /**
+     *          @front-team, I can modify the method for specific stuff, lemme know if u need anything else
+     * @param keyword : the keyword to look for in a recipes category or keywords; the search is case-insensitive, and it searches for the given keywords in the category string(thus if the category contains a substring of the keyword, it'll be found) and in the keywords list, in the same manner(if any keyword in the list contains the given keyword as a substring, it'll be found)
+     * @param pageDTO: Integer pageNo, Integer pageSize, Sort.Direction sortDirection {Sort.Direction.ASC, Sort.Direction.DESC}, String sortByField <nameOfRecipePropriety>
+     *      *                defaults: pageNo = 0, pageSize = 10, sortDirection = Sort.Direction.ASC, sortByField = "recipeId"
+     *      *                if you only give some of the parameters, the rest will be set to the default values! <3
+     *      *                if you give invalid values for Sort.Direction or sortByField, it'll crash(for sortByField, you should get error code 500)
+     * @return Page<Recipe>
+     */
+    @GetMapping("/recipePageByKeyword")
+    public Page<Recipe> getRecipeByCategory(@RequestParam String keyword, @RequestBody PageDTO pageDTO) {
+        Pageable page = pageDTO.getPageable(pageDTO);
+        return recipeRepository.findRecipeByCategoryOrKeywordsQuery(keyword, page);
     }
 
     //so i don't accidentally set up again; will b uncommented when ill b working with db population again

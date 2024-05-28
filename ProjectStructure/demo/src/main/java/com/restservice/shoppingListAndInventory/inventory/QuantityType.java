@@ -11,17 +11,19 @@ public enum QuantityType {
     Pints, Lbs, Cloves, Slices, Leaves, Amount, ToTaste;
 
     public static QuantityType fromString(String text) {
+        text = text.trim();
+
         for (QuantityType b : QuantityType.values()) {
             if (b.toString().equalsIgnoreCase(text)) {
                 return b;
             }
         }
-        return null;
+        return Amount;
     }
 
 
     public static QuantityType fromPhrase(String text) {
-        QuantityType result = Pieces;
+        QuantityType result = Amount;
         for (String word : text.split(" ")) {
             for (QuantityType b : QuantityType.values()) {
                 if (QuantityType.fromString(word) != null) {
