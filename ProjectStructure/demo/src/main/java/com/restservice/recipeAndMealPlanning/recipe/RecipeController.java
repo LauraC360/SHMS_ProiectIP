@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
@@ -67,7 +68,7 @@ public class RecipeController {
 
 
     // Tested with Postman (http://localhost:5000/api/v1/recipes/defaultRecipe)
-    @GetMapping("/defaultRecipe")
+    @GetMapping(value="/defaultRecipe", produces = MediaType.APPLICATION_JSON_VALUE)
     public Recipe getDefaultRecipe() {
         recipeRepository.save(defaultRecipe);//saving in the db test! works!
         return defaultRecipe;
@@ -75,13 +76,13 @@ public class RecipeController {
 
 
     // Tested with Postman (http://localhost:5000/api/v1/recipes/recipe/38)
-    @GetMapping("/recipe/{id}")
+    @GetMapping(value = "/recipe/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Recipe getRecipe(@PathVariable int id) {
         return recipeRepository.findById(id).orElse(null);
     }
 
     // Tested with Postman (http://localhost:5000/api/v1/recipes/getRecommendations/1)
-    @GetMapping("/getRecommendations/{userId}")
+    @GetMapping(value="/getRecommendations/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Recipe> getRecommendations(@PathVariable int userId) {
         RecommendationSystem recommendationSystem = new RecommendationSystem(recipeService);
         List<Integer> recommendations = recommendationSystem.getAllRecommendations().get(userId);
@@ -186,7 +187,7 @@ public class RecipeController {
 
     // Tested with Postman (http://localhost:5000/api/v1/recipes/recipePage)
     // Doesnt work
-    @GetMapping("/recipePage")
+    @GetMapping(value="/recipePage", produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<Recipe> getRecipePage(@RequestBody PageDTO pageDTO) {
         Pageable page = pageDTO.getPageable(pageDTO);
         return recipeRepository.findAll(page);
@@ -203,7 +204,7 @@ public class RecipeController {
      *      *                if you give invalid values for Sort.Direction or sortByField, it'll crash(for sortByField, you should get error code 500)
      * @return Page<Recipe>
      */
-    @GetMapping("/recipePageByKeyword")
+    @GetMapping(value="/recipePageByKeyword", produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<Recipe> getRecipeByCategory(@RequestParam String keyword, @RequestBody PageDTO pageDTO) {
         Pageable page = pageDTO.getPageable(pageDTO);
         return recipeRepository.findRecipeByCategoryOrKeywordsQuery(keyword, page);
