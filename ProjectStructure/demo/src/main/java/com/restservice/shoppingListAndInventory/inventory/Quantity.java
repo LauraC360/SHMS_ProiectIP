@@ -13,7 +13,7 @@ import lombok.ToString;
 @Embeddable
 public class Quantity {
     float value;
-    @Enumerated(EnumType.ORDINAL)//theres also EnumType.STRING
+    @Enumerated(EnumType.ORDINAL)//to change
     QuantityType type;
 
     public Quantity() {
