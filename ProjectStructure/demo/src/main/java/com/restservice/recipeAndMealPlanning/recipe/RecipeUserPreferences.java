@@ -1,5 +1,6 @@
 package com.restservice.recipeAndMealPlanning.recipe;
 
+import com.restservice.shoppingListAndInventory.inventory.Ingredient;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

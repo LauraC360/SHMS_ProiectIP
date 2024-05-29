@@ -2,6 +2,7 @@ package com.restservice.shoppingListAndInventory.inventory;
 
 
 import com.restservice.recipeAndMealPlanning.recipe.Recipe;
+import com.restservice.restockAndShoppingOptimization.Products;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,6 +19,10 @@ public class Ingredient implements Eatable{// we  might remove eatable
     String name;
     @Embedded
     Quantity quantity;
+
+    @OneToOne
+    @JoinColumn(name = "product_id")
+    Products productId;
 
     public Ingredient(){
     }

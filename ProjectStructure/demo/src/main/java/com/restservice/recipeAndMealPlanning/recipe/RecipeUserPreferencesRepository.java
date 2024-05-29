@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.time.Duration;
 import java.util.List;
 
+@Repository
 public interface RecipeUserPreferencesRepository extends JpaRepository<RecipeUserPreferences, Integer> {
     boolean existsById(Integer id);
 

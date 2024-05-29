@@ -11,15 +11,21 @@ import java.util.List;
 @RequestMapping("/recipeUserPreferences")
 public class RecipeUserPreferencesController {
 
+    @Autowired
     private final RecipeUserPreferencesService service;
 
     @Autowired
-    public RecipeUserPreferencesController(RecipeUserPreferencesService service) {
+    private final RecipeUserPreferencesRepository repository;
+
+    @Autowired
+    public RecipeUserPreferencesController(RecipeUserPreferencesService service, RecipeUserPreferencesRepository repository) {
         this.service = service;
+        this.repository = repository;
     }
 
     // testing the connection to the database on the browser
-    @GetMapping
+    // Tested with Postman (GET Request: http://localhost:8080/recipeUserPreferences/getAllPreferences)
+    @GetMapping("/getAllPreferences")
     public List<RecipeUserPreferences> getAllPreferences() {
         return service.getAllPreferences();
     }

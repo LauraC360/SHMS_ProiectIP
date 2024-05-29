@@ -9,6 +9,7 @@ import java.util.Optional;
 @Service
 public class RecipeUserPreferencesService {
 
+    @Autowired
     private final RecipeUserPreferencesRepository repository;
 
     @Autowired
@@ -31,6 +32,13 @@ public class RecipeUserPreferencesService {
 
     public RecipeUserPreferences savePreferences(RecipeUserPreferences preferences) {
         return repository.save(preferences);
+    }
+
+    /// method to add a recipe id to the Liked Recipes list
+    public RecipeUserPreferences addLikedRecipe(int id, int recipeId) {
+        RecipeUserPreferences preferences = getPreferencesById(id);
+        preferences.getLikedRecipes().add(recipeId);
+        return savePreferences(preferences);
     }
 
     public void deletePreferences(int id) {
