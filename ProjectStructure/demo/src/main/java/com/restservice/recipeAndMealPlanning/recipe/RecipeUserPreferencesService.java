@@ -12,7 +12,7 @@ public class RecipeUserPreferencesService {
     @Autowired
     private final RecipeUserPreferencesRepository repository;
 
-    @Autowired
+    //@Autowired
     public RecipeUserPreferencesService(RecipeUserPreferencesRepository repository) {
         this.repository = repository;
     }

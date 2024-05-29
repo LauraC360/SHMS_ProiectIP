@@ -105,7 +105,7 @@ public class RecipeController {
 
     // Tested with Postman (http://localhost:5000/api/v1/recipes/RecipeAI?recipeFormat=youtube&input=apple pie recipe&mainIngredients=apple)
     // Error in backend: CreateProcess error=2, The system cannot find the file specified
-    @PostMapping("/RecipeAI")
+    @PostMapping(value="/RecipeAI", produces = MediaType.APPLICATION_JSON_VALUE)
     public Recipe generateRecipe(@RequestParam String recipeFormat, @RequestParam String input, @RequestParam String mainIngredients) {
         RecipeAIServer recipeAIServer = new RecipeAIServer();
         Recipe generatedRecipe = recipeAIServer.generateRecipe(recipeFormat, input, mainIngredients);
@@ -147,34 +147,89 @@ public class RecipeController {
     //  },
     //  "ingredients": []
     //}
-    @PostMapping("/addRecipe")
+    @PostMapping(value="/addRecipe", produces = MediaType.APPLICATION_JSON_VALUE)
     public Recipe addRecipe(@RequestBody Recipe newRecipe) {
         System.out.println(newRecipe.toString());
         return recipeRepository.save(newRecipe);
     }
 
-    @PostMapping("/addLike")
+
+    // Tested with Postman (http://localhost:5000/api/v1/recipes/addLike?recipeId=1&userId=1)
+    @PostMapping(value="/addLike", produces = MediaType.APPLICATION_JSON_VALUE)
     public Recipe addLike(@RequestParam int recipeId, @RequestParam int userId) {
-//        Recipe recipe = recipeRepository.findById(recipeId).orElse(null);
-//        if (recipe == null) {
-//            return null;
-//        }
-//        RecipeUserPreferencesService recipeUserPreferencesService = new RecipeUserPreferencesService(recipeUserPreferencesRepository);
-//        RecipeUserPreferences preferences = recipeUserPreferencesService.getPreferencesById(userId);
-//        if (preferences == null) {
-//            preferences = new RecipeUserPreferences(userId, new ArrayList<>(), new ArrayList<>());
-//        }
-//
-//        preferences.getLikedRecipes().add(recipeId);
-//        recipeUserPreferencesService.savePreferences(preferences);
+        Recipe recipe = recipeRepository.findById(recipeId).orElse(null);
+        if (recipe == null) {
+            return null;
+        }
+        RecipeUserPreferencesService recipeUserPreferencesService = new RecipeUserPreferencesService(recipeUserPreferencesRepository);
+        RecipeUserPreferences preferences = recipeUserPreferencesService.getPreferencesById(userId);
+        if (preferences == null) {
+            preferences = new RecipeUserPreferences(userId, null, null, null);
+        }
 
-//        return recipe;
-        return null;
+        preferences.addLikedRecipe(recipeId);
+        recipeUserPreferencesService.savePreferences(preferences);
 
+        return recipeUserPreferencesService.getPreferencesById(userId).getLikedRecipes().contains(recipeId) ? recipe : null;
+    }
+
+    @DeleteMapping(value="/removeLike", produces = MediaType.APPLICATION_JSON_VALUE)
+    public boolean removeLike(@RequestParam int recipeId, @RequestParam int userId) {
+        Recipe recipe = recipeRepository.findById(recipeId).orElse(null);
+        if (recipe == null) {
+            return false;
+        }
+        RecipeUserPreferencesService recipeUserPreferencesService = new RecipeUserPreferencesService(recipeUserPreferencesRepository);
+        RecipeUserPreferences preferences = recipeUserPreferencesService.getPreferencesById(userId);
+        if (preferences == null) {
+            preferences = new RecipeUserPreferences(userId, null, null, null);
+        }
+        preferences.removeLikedRecipe(recipeId);
+        recipeUserPreferencesService.savePreferences(preferences);
+
+        return !recipeUserPreferencesService.getPreferencesById(userId).getLikedRecipes().contains(recipeId);
+    }
+
+    @PostMapping(value="/addView", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Recipe addView(@RequestParam int recipeId, @RequestParam int userId) {
+        Recipe recipe = recipeRepository.findById(recipeId).orElse(null);
+        if (recipe == null) {
+            return null;
+        }
+        RecipeUserPreferencesService recipeUserPreferencesService = new RecipeUserPreferencesService(recipeUserPreferencesRepository);
+        RecipeUserPreferences preferences = recipeUserPreferencesService.getPreferencesById(userId);
+        if (preferences == null) {
+            preferences = new RecipeUserPreferences(userId, null, null, null);
+        }
+
+        preferences.addViewedRecipe(recipeId);
+        recipeUserPreferencesService.savePreferences(preferences);
+
+        return recipeUserPreferencesService.getPreferencesById(userId).getViewedRecipes().contains(recipeId) ? recipe : null;
+    }
+
+    @PostMapping(value = "/addHistory", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Recipe addHistory(@RequestParam int recipeId, @RequestParam int userId) {
+        Recipe recipe = recipeRepository.findById(recipeId).orElse(null);
+        if (recipe == null) {
+            return null;
+        }
+        RecipeUserPreferencesService recipeUserPreferencesService = new RecipeUserPreferencesService(recipeUserPreferencesRepository);
+        RecipeUserPreferences preferences = recipeUserPreferencesService.getPreferencesById(userId);
+        if (preferences == null) {
+            preferences = new RecipeUserPreferences(userId, null, null, null);
+        }
+
+        preferences.addHistory(recipeId);
+        recipeUserPreferencesService.savePreferences(preferences);
+
+        return recipeUserPreferencesService.getPreferencesById(userId).getHistory().contains(recipeId) ? recipe : null;
     }
 
 
 
+
+    // Tested with Postman (http://localhost:5000/api/v1/recipes/recipePage)
     /**
      *
      *                @front-team, I can set them to the default ones in case of wrong values, let me know if that helps u more; please read below!
@@ -184,9 +239,6 @@ public class RecipeController {
      *                if you give invalid values for Sort.Direction or sortByField, it'll crash(for sortByField, you should get error code 500)
      * @return Page<Recipe>
      */
-
-    // Tested with Postman (http://localhost:5000/api/v1/recipes/recipePage)
-    // Doesnt work
     @GetMapping(value="/recipePage", produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<Recipe> getRecipePage(@RequestBody PageDTO pageDTO) {
         Pageable page = pageDTO.getPageable(pageDTO);
