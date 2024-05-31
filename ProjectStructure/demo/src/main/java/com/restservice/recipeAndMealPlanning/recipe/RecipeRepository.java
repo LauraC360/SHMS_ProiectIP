@@ -26,4 +26,7 @@ public interface RecipeRepository extends JpaRepository<Recipe, Integer> {
             "OR LOWER(k) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     Page<Recipe> findRecipeByCategoryOrKeywordsQuery(@Param("keyword") String keyword, Pageable pageable);
 
+
+    Page<Recipe> findRecipeByAuthorId(Integer authorId, Pageable pageable);
+
 }

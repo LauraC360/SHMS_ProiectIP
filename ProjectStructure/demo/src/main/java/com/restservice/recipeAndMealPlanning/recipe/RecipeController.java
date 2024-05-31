@@ -263,6 +263,22 @@ public class RecipeController {
     }
 
 
+    /**
+     *          @front-team, I can modify the method for specific stuff, lemme know if u need anything else
+     * @param userId : the id of the user whose recipes you want to get(for now u may test them on the users from the Food.com, but after user detection is implemented by the respective module, we'll switch to that (in the databse))
+     * @param pageDTO: Integer pageNo, Integer pageSize, Sort.Direction sortDirection {Sort.Direction.ASC, Sort.Direction.DESC}, String sortByField <nameOfRecipePropriety>
+     *      *                defaults: pageNo = 0, pageSize = 10, sortDirection = Sort.Direction.ASC, sortByField = "recipeId"
+     *      *                if you only give some of the parameters, the rest will be set to the default values! <3
+     *      *                if you give invalid values for Sort.Direction or sortByField, it'll crash(for sortByField, you should get error code 500)
+     * @return Page<Recipe>
+     */
+    @GetMapping(value="/recipePageByUserId", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Page<Recipe> getRecipeByUserId(@RequestParam int userId, @RequestBody PageDTO pageDTO) {
+        Pageable page = pageDTO.getPageable(pageDTO);
+        return recipeRepository.findRecipeByAuthorId(userId, page);
+    }
+
+
 
 
 
